@@ -20,18 +20,20 @@ import PIL
 import torch
 from transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer
 
-from ...models import AutoencoderKL, UNet2DConditionModel, ControlNetModel, MultiControlNetModel
-from ...models.controlnet import ControlNetOutput
-from ...schedulers import KarrasDiffusionSchedulers
-from ...utils import (
-    PIL_INTERPOLATION,
-    deprecate,
+from diffusers.models import AutoencoderKL, UNet2DConditionModel, ControlNetModel, MultiControlNetModel
+from diffusers.models.controlnet import ControlNetOutput
+from diffusers.schedulers import KarrasDiffusionSchedulers
+from diffusers.utils import PIL_INTERPOLATION
+from diffusers.utils.import_utils import (
     is_accelerate_available,
     is_accelerate_version,
     logging,
-    randn_tensor,
 )
-from ..pipeline_utils import DiffusionPipeline
+from diffusers.utils.deprecation_utils import deprecate
+from diffusers.utils.torch_utils import randn_tensor
+
+
+from diffusers.pipeline_utils import DiffusionPipeline
 from . import StableDiffusionPipelineOutput
 from .safety_checker import StableDiffusionSafetyChecker
 
