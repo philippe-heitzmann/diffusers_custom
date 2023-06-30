@@ -35,8 +35,8 @@ from diffusers.utils.torch_utils import randn_tensor
 
 
 from diffusers.pipeline_utils import DiffusionPipeline
-from . import StableDiffusionPipelineOutput
-from .safety_checker import StableDiffusionSafetyChecker
+from diffusers.pipelines.stable_diffusion import StableDiffusionPipelineOutput
+from safety_checker import StableDiffusionSafetyChecker
 
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
