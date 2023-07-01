@@ -579,7 +579,7 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
             image = image.to(device=device, dtype=dtype)
 
         if do_classifier_free_guidance:
-            image = torch.cat([image] * 3)
+            image = torch.cat([image] * 1)
 
         return image
 
