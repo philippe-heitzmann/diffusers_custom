@@ -406,7 +406,7 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
                 scaled_latent_model_input = torch.cat([scaled_latent_model_input, image_latents], dim=1)
 
                 print(f"image.shape: {image.shape}")
-                
+
                 # controlnet(s) inference
                 down_block_res_samples, mid_block_res_sample = self.controlnet(
                     latent_model_input,
@@ -579,7 +579,7 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
             image = image.to(device=device, dtype=dtype)
 
         if do_classifier_free_guidance:
-            image = torch.cat([image] * 2)
+            image = torch.cat([image] * 3)
 
         return image
 
@@ -997,7 +997,14 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
         return latents
 
     def prepare_image_latents(
-        self, image, batch_size, num_images_per_prompt, dtype, device, do_classifier_free_guidance, generator=None
+        self, 
+        image, 
+        batch_size, 
+        num_images_per_prompt, 
+        dtype, 
+        device, 
+        do_classifier_free_guidance, 
+        generator=None
     ):
         if not isinstance(image, (torch.Tensor, PIL.Image.Image, list)):
             raise ValueError(
