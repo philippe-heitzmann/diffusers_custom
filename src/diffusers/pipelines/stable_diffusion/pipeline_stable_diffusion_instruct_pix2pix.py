@@ -826,6 +826,47 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
         # we always cast to float32 as this does not cause significant overhead and is compatible with bfloat16
         image = image.cpu().permute(0, 2, 3, 1).float().numpy()
         return image
+    
+
+    def check_image(self, image, prompt, prompt_embeds) -> None:
+        '''Check that image is of correct dtype and that number of prompts
+        or prompt_embeds matches number of images passed'''
+
+        # Check image is of a correct dtype
+        image_is_pil = isinstance(image, PIL.Image.Image)
+        image_is_tensor = isinstance(image, torch.Tensor)
+        image_is_pil_list = isinstance(image, list) and isinstance(image[0], PIL.Image.Image)
+        image_is_tensor_list = isinstance(image, list) and isinstance(image[0], torch.Tensor)
+
+        if not image_is_pil and not image_is_tensor and not image_is_pil_list and not image_is_tensor_list:
+            raise TypeError(
+                "image must be passed and be one of PIL image, torch tensor, list of PIL images, or list of torch tensors"
+            )
+
+        # Get how many images there are 
+        if image_is_pil:
+            image_batch_size = 1
+        elif image_is_tensor:
+            image_batch_size = image.shape[0]
+        elif image_is_pil_list:
+            image_batch_size = len(image)
+        elif image_is_tensor_list:
+            image_batch_size = len(image)
+
+        # Check how many prompts there are 
+        if prompt is not None and isinstance(prompt, str):
+            prompt_batch_size = 1
+        elif prompt is not None and isinstance(prompt, list):
+            prompt_batch_size = len(prompt)
+        elif prompt_embeds is not None:
+            prompt_batch_size = prompt_embeds.shape[0]
+
+        # Check that number of images == number of prompts
+        if image_batch_size != 1 and image_batch_size != prompt_batch_size:
+            raise ValueError(
+                f"If image batch size is not 1, image batch size must be same as prompt batch size. image batch size: {image_batch_size}, prompt batch size: {prompt_batch_size}"
+            )
+
 
     def check_inputs(
         self,
