@@ -24,7 +24,7 @@ from torch import nn
 from transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer
 
 from ...models import AutoencoderKL, ControlNetModel, UNet2DConditionModel
-from ...models.controlnet import ControlNetOutput, MultiControlNetModel
+from diffusers.models.controlnet import ControlNetOutput, MultiControlNetModel
 from ...models.modeling_utils import ModelMixin
 from ...schedulers import KarrasDiffusionSchedulers
 from ...utils import (
