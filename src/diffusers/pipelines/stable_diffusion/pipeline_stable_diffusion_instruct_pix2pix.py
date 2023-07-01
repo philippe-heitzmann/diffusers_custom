@@ -398,6 +398,8 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
                 # concat latents, image_latents in the channel dimension
                 scaled_latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
                 scaled_latent_model_input = torch.cat([scaled_latent_model_input, image_latents], dim=1)
+                print(f"image_latents.shape: {image_latents.shape}")
+                print(f"scaled_latent_model_input.shape: {scaled_latent_model_input.shape}")
 
                 # controlnet(s) inference
                 down_block_res_samples, mid_block_res_sample = self.controlnet(
@@ -789,6 +791,7 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
 
         return prompt_embeds
 
+
     # Copied from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion.StableDiffusionPipeline.run_safety_checker
     def run_safety_checker(self, image, device, dtype):
         if self.safety_checker is not None:
@@ -799,6 +802,7 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
         else:
             has_nsfw_concept = None
         return image, has_nsfw_concept
+
 
     # Copied from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion.StableDiffusionPipeline.prepare_extra_step_kwargs
     def prepare_extra_step_kwargs(self, generator, eta):
@@ -817,6 +821,7 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
         if accepts_generator:
             extra_step_kwargs["generator"] = generator
         return extra_step_kwargs
+
 
     # Copied from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion.StableDiffusionPipeline.decode_latents
     def decode_latents(self, latents):
