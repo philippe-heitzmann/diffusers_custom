@@ -393,9 +393,9 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
                 # Expand the latents if we are doing classifier free guidance.
                 # The latents are expanded 3 times because for pix2pix the guidance\
                 # is applied for both the text and the input image.
-                print(f"latent_model_input.shape: {latent_model_input.shape}")
+                print(f"latents.shape: {latents.shape}")
                 latent_model_input = torch.cat([latents] * 3) if do_classifier_free_guidance else latents
-                print(f"latent_model_input.shape2: {latent_model_input.shape}")
+                print(f"latent_model_input.shape: {latent_model_input.shape}")
 
                 # Scales the denoising model input by `(sigma**2 + 1) ** 0.5` to match the Euler algorithm.
                 scaled_latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
