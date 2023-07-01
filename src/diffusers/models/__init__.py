@@ -17,7 +17,7 @@ from ..utils import is_flax_available, is_torch_available
 
 if is_torch_available():
     from .autoencoder_kl import AutoencoderKL
-    from .controlnet import ControlNetModel
+    from .controlnet import ControlNetModel, MultiControlNetModel
     from .dual_transformer_2d import DualTransformer2DModel
     from .modeling_utils import ModelMixin
     from .prior_transformer import PriorTransformer
