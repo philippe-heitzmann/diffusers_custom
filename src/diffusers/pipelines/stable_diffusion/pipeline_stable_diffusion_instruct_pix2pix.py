@@ -397,9 +397,9 @@ class StableDiffusionInstructPix2PixPipeline(DiffusionPipeline):
 
                 # concat latents, image_latents in the channel dimension
                 scaled_latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
-                scaled_latent_model_input = torch.cat([scaled_latent_model_input, image_latents], dim=1)
                 print(f"image_latents.shape: {image_latents.shape}")
                 print(f"scaled_latent_model_input.shape: {scaled_latent_model_input.shape}")
+                scaled_latent_model_input = torch.cat([scaled_latent_model_input, image_latents], dim=1)
 
                 # controlnet(s) inference
                 down_block_res_samples, mid_block_res_sample = self.controlnet(
